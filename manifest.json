@@ -1,0 +1,36 @@
+{
+	"name": "Sakura Jumper",
+	"description": "Open sakura-checker from amazon page that you browsing.",
+	"version": "0.1.4",
+	"manifest_version": 2,
+	"icons": {
+		"16": "icons/icon_16.png",
+		"48": "icons/icon_48.png",
+		"128": "icons/icon_128.png"
+	},
+	"content_scripts": [
+		{
+			"matches": [
+				"https://www.amazon.co.jp/*"
+			],
+			"js": [
+				"js/main.js"
+			]
+		}
+	],
+	"browser_action": {
+		"default_icon": "icons/icon_16.png",
+		"default_title": "open サクラチェッカー"
+	},
+	"permissions": [
+		"activeTab"
+	],
+	"background": {
+		"matches": [
+			"https://www.amazon.co.jp/*"
+		],
+		"scripts": [
+			"js/main.js"
+		]
+	}
+}
