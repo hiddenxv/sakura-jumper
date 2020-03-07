@@ -28,9 +28,6 @@
 		"tabs"
 	],
 	"background": {
-		"matches": [
-			"https://www.amazon.co.jp/*"
-		],
 		"scripts": [
 			"js/main.js"
 		]
