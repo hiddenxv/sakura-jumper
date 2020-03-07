@@ -1,5 +1,25 @@
+var getItemID = (url) => {
+	if (!url.startsWith('https://www.amazon.co.jp/')) {
+		return null;
+	}
+
+	const elements = url.split('/');
+	let index = elements.indexOf('dp');
+	if (index < 0) {
+		index = elements.indexOf('product');
+		if (index < 0) {
+			return null;
+		}
+	}
+
+	if (elements.length > index) {
+		return elements[index + 1].split('?')[0];
+	} else {
+		return null;
+	}
+};
+
 var openSakura = () => {
-	// urlから商品IDを取得
 	chrome.tabs.getSelected((tab) => {
 		const itemID = getItemID(tab.url);
 		if (itemID) {
@@ -9,23 +29,8 @@ var openSakura = () => {
 	});
 };
 
-var getItemID = (url) => {
-	if (!url.startsWith('https://www.amazon.co.jp/')) {
-		return null;
-	}
-
-	const elements = url.split('/');
-	const dpIndex = elements.indexOf('dp');
-	if (dpIndex >= 0 && elements.length > dpIndex) {
-		return elements[dpIndex + 1];
-	} else {
-		return null;
-	}
-};
-
-chrome.tabs.onSelectionChanged.addListener(function(tabId) {
+var updateIcon = (tabID) => {
 	chrome.tabs.getSelected((tab) => {
-		// alert(tab.url);
 		const itemID = getItemID(tab.url);
 		if (itemID) {
 			chrome.browserAction.setIcon({
@@ -39,17 +44,7 @@ chrome.tabs.onSelectionChanged.addListener(function(tabId) {
 			});
 		}
 	});
-});
+};
 
-
-(function () {
-	if (chrome.browserAction) {
-		chrome.browserAction.onClicked.addListener(openSakura);
-	}
-
-	if (chrome.tabs || true) {
-		chrome.tabs.onActivated.addListener((info) => {
-			console.log(info);
-		});
-	}
-})();
+chrome.tabs.onSelectionChanged.addListener(updateIcon);
+chrome.browserAction.onClicked.addListener(openSakura);
