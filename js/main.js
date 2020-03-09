@@ -1,4 +1,4 @@
-var getItemID = (url) => {
+var getAsin = (url) => {
 	if (!url.startsWith('https://www.amazon.co.jp/')) {
 		return null;
 	}
@@ -13,7 +13,7 @@ var getItemID = (url) => {
 	}
 
 	if (elements.length > index) {
-		return elements[index + 1].split('?')[0];
+		return elements[index + 1].slice(0, 10);
 	} else {
 		return null;
 	}
@@ -21,9 +21,9 @@ var getItemID = (url) => {
 
 var openSakura = () => {
 	chrome.tabs.getSelected((tab) => {
-		const itemID = getItemID(tab.url);
-		if (itemID) {
-			const sakuraUrl = `https://sakura-checker.jp/search/${itemID}/`;
+		const asin = getAsin(tab.url);
+		if (asin) {
+			const sakuraUrl = `https://sakura-checker.jp/search/${asin}/`;
 			window.open(sakuraUrl, 'sakuraChecker');
 		}
 	});
@@ -31,8 +31,8 @@ var openSakura = () => {
 
 var updateIcon = (tabID) => {
 	chrome.tabs.getSelected((tab) => {
-		const itemID = getItemID(tab.url);
-		if (itemID) {
+		const asin = getAsin(tab.url);
+		if (asin) {
 			chrome.browserAction.setIcon({
 				path: "icons/icon_16.png",
 				tabId: tab.id

@@ -1,7 +1,7 @@
 {
 	"name": "Sakura Jumper",
 	"description": "Open sakura-checker from amazon page that you browsing.",
-	"version": "0.2.10",
+	"version": "0.2.11",
 	"manifest_version": 2,
 	"icons": {
 		"16": "icons/icon_16.png",
