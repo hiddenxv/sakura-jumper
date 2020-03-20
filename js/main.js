@@ -46,5 +46,6 @@ var updateIcon = (tabID) => {
 	});
 };
 
+chrome.tabs.onUpdated.addListener(updateIcon);
 chrome.tabs.onSelectionChanged.addListener(updateIcon);
 chrome.browserAction.onClicked.addListener(openSakura);
